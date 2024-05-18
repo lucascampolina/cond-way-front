@@ -4,32 +4,30 @@ import {registerUser, selectRegistrationStatus, selectRegistrationError} from ".
 import SuccessAlert from "./SuccessAlert";
 import ErrorAlert from "./ErrorAlert";
 import {useForm} from "react-hook-form";
+import { registrationSchema } from '../validationSchemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const RegistrationForm = () => {
     const dispatch = useDispatch();
-    const {register, handleSubmit, formState: {errors}} = useForm(
-        {
-            defaultValues: {
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                passwordConfirmation: "",
-                marketingAccept: false,
-            },
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        resolver: zodResolver(registrationSchema),
         });
     const [showAlert, setShowAlert] = useState(false);
     const [, setErrorMessage] = useState(null);
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
 
     const registrationStatus = useSelector(selectRegistrationStatus);
     const registrationError = useSelector(selectRegistrationError);
 
     useEffect(() => {
-        console.log("Registration status:", registrationStatus); // Log status changes
+        console.log("Registration status:", registrationStatus);
         console.log("Registration error:", registrationError);
         if (registrationStatus === 'succeeded') {
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
+        } else if (registrationStatus === 'failed') {
+            setShowErrorAlert(true);
+            setTimeout(() => setShowErrorAlert(false), 3000);
         }
     }, [registrationStatus, registrationError]);
 
@@ -54,7 +52,7 @@ const RegistrationForm = () => {
     return (
             <section className="bg-white py-8 px-4 sm:px-10">
                 {showAlert && (
-                    <div className="fixed top-0 right-0 mt-4 mr-4 z-50">
+                    <div className="alert-container">
                         <SuccessAlert
                             message="User saved."
                             description='Your user have been saved.'
@@ -63,14 +61,17 @@ const RegistrationForm = () => {
                     </div>
                 )}
 
-                {registrationError && (
+                {showErrorAlert && (
                     <div className="alert-container">
                         <ErrorAlert
                             message="Error"
                             description={
                                 registrationError.message || "An error occurred during registration."
                             }
-                            onClose={() => setErrorMessage(null)}
+                            onClose={() =>  {
+                                setErrorMessage(null);
+                                setShowErrorAlert(false);
+                            }}
                         />
                     </div>
                 )}
@@ -88,10 +89,10 @@ const RegistrationForm = () => {
                                     id="FirstName"
                                     name="firstName"
                                     placeholder="Enter your first name"
-                                    className="mt-1 w-full rounded-md border-gray-300 shadow-sm p-2"
-                                    {...register("firstName", {required: "First Name is required"})}
+                                    className={`mt-1 w-full rounded-md border-gray-300 shadow-sm p-2 ${errors.firstName ? 'border-red-500' : ''}`}
+                                    {...register("firstName")}
                                 />
-                                {/*{errors?.firstName?.message && <p>{errors?.firstName?.message}</p>}*/}
+                                {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName.message}</p>}
                             </div>
 
                             <div>
@@ -104,10 +105,10 @@ const RegistrationForm = () => {
                                     id="LastName"
                                     name="lastName"
                                     placeholder="Enter your last name"
-                                    className="mt-1 w-full rounded-md border-gray-300 shadow-sm p-2"
-                                    {...register("lastName", {required: "Last Name is required"})}
+                                    className={`mt-1 w-full rounded-md border-gray-300 shadow-sm p-2  ${errors.lastName ? 'border-red-500' : ''}`}
+                                    {...register("lastName")}
                                 />
-                                {/*{errors?.lastName && <p>{errors.lastName?.message}</p>}*/}
+                                {errors.lastName && <p className="text-red-500 text-xs italic">{errors.lastName.message}</p>}
                             </div>
                         </div>
 
@@ -121,10 +122,10 @@ const RegistrationForm = () => {
                                 id="Email"
                                 name="email"
                                 placeholder="Enter your email"
-                                className="mt-1 w-full rounded-md border-gray-300 shadow-sm p-2"
-                                {...register("email", {required: "Email is required"})}
+                                className={`mt-1 w-full rounded-md border-gray-300 shadow-sm p-2"  ${errors.email ? 'border-red-500' : ''}`}
+                                {...register("email")}
                             />
-                            {errors?.email && <p>{errors?.email.message}</p>}
+                            {errors.email && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -138,10 +139,10 @@ const RegistrationForm = () => {
                                     id="Password"
                                     name="password"
                                     placeholder="Enter your password"
-                                    className="mt-1 w-full rounded-md border-gray-300 shadow-sm p-2"
-                                    {...register("password", {required: "Password is required"})}
+                                    className={`mt-1 w-full rounded-md border-gray-300 shadow-sm p-2"  ${errors.password ? 'border-red-500' : ''}`}
+                                    {...register("password")}
                                 />
-                                {errors.password && <p>{errors.password.message}</p>}
+                                {errors.password && <p className="text-red-500 text-xs italic">{errors.password.message}</p>}
                             </div>
 
                             <div>
@@ -155,10 +156,10 @@ const RegistrationForm = () => {
                                     id="PasswordConfirmation"
                                     name="passwordConfirmation"
                                     placeholder="Confirm your password"
-                                    className="mt-1 w-full rounded-md border-gray-300 shadow-sm p-2"
-                                    {...register("passwordConfirmation", {required: "Password Confirmation is required"})}
+                                    className={`mt-1 w-full rounded-md border-gray-300 shadow-sm p-2 ${errors.password ? 'border-red-500' : ''}`}
+                                    {...register("passwordConfirmation")}
                                 />
-                                {errors.passwordConfirmation && <p>{errors.passwordConfirmation.message}</p>}
+                                {errors.passwordConfirmation && <p className="text-red-500 text-xs italic">{errors.passwordConfirmation.message}</p>}
                             </div>
                         </div>
 
@@ -180,10 +181,10 @@ const RegistrationForm = () => {
 
                         <div>
                             <p className="text-sm text-gray-500">
-                                By creating an account, you agree to our
+                                By creating an account, you agree to our{" "}
                                 <button className="text-indigo-600 hover:text-indigo-500"> terms and
-                                    conditions </button>
-                                and
+                                    conditions  </button>{" "}
+                                 and{" "}
                                 <button className="text-indigo-600 hover:text-indigo-500"> privacy policy</button>.
                             </p>
                         </div>
