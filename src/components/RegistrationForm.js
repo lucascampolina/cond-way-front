@@ -20,8 +20,6 @@ const RegistrationForm = () => {
     const registrationError = useSelector(selectRegistrationError);
 
     useEffect(() => {
-        console.log("Registration status:", registrationStatus);
-        console.log("Registration error:", registrationError);
         if (registrationStatus === 'succeeded') {
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
