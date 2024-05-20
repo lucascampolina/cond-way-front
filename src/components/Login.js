@@ -5,9 +5,11 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {loginSchema} from "../validationSchemas";
 import { useDispatch, useSelector } from "react-redux";
 import {loginUser, selectLoginStatus, selectLoginError} from "../redux/loginSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login= () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema)
@@ -18,13 +20,14 @@ const Login= () => {
 
     useEffect(() => {
         if (loginStatus === 'succeeded') {
-            console.log(loginStatus)
+            navigate('/dashboard')
         } else if (loginStatus === 'failed') {
             console.log(loginStatus)
         }
     }, [loginStatus, loginError]);
 
     const onSubmit = (data) => {
+
         console.log(data);
         dispatch(loginUser(data))
     }
@@ -34,12 +37,12 @@ const Login= () => {
             <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <img
-                        className="mx-auto h-10 w-auto"
+                        className="mx-auto h-32 w-auto"
                         src={logo}
                         alt="Your Company"
                     />
                     <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Sign in to your account
+                        Entre em sua conta
                     </h2>
                 </div>
 
@@ -49,7 +52,7 @@ const Login= () => {
                         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Email address
+                                    E-mail
                                 </label>
                                 <div className="mt-2">
                                     <input
@@ -66,7 +69,7 @@ const Login= () => {
 
                             <div>
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Password
+                                    Senha
                                 </label>
                                 <div className="mt-2">
                                     <input
@@ -90,13 +93,13 @@ const Login= () => {
                                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
                                     <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
-                                        Remember me
+                                        Lembre de mim
                                     </label>
                                 </div>
 
                                 <div className="text-sm leading-6">
                                     <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                        Forgot password?
+                                        Esqueceu sua senha?
                                     </a>
                                 </div>
                             </div>
@@ -106,7 +109,7 @@ const Login= () => {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Sign in
+                                    Iniciar sessão
                                 </button>
                             </div>
                         </form>
@@ -117,14 +120,16 @@ const Login= () => {
                                     <div className="w-full border-t border-gray-200" />
                                 </div>
                                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                                    <span className="bg-white px-6 text-gray-900">Or continue with</span>
+                                    <span className="bg-white px-6 text-gray-900">Ou continue com</span>
                                 </div>
                             </div>
 
                             <div className="mt-6 grid grid-cols-2 gap-4">
-                                <a
+                                <button
                                     href="#"
-                                    className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
+                                    disabled={true}
+                                    className={`flex w-full items-center justify-center gap-3 rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ${'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                                    onClick={(e) => e.preventDefault()}
                                 >
                                     <svg className="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24">
                                         <path
@@ -145,11 +150,13 @@ const Login= () => {
                                         />
                                     </svg>
                                     <span className="text-sm font-semibold leading-6">Google</span>
-                                </a>
+                                </button>
 
-                                <a
+                                <button
                                     href="#"
-                                    className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
+                                    disabled={true}
+                                    className={`flex w-full items-center justify-center gap-3 rounded-md px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ${'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                                    onClick={(e) => e.preventDefault()}
                                 >
                                     <svg className="h-5 w-5 fill-[#24292F]" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                         <path
@@ -159,16 +166,16 @@ const Login= () => {
                                         />
                                     </svg>
                                     <span className="text-sm font-semibold leading-6">GitHub</span>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
 
                     <p className="mt-10 text-center text-sm text-gray-500">
-                        Not a member?{' '}
-                        <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            Start a 14 day free trial
-                        </a>
+                        Não é assinante?{' '}
+                        <Link to="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                            Inicie 14 dias gratuitos
+                        </Link>
                     </p>
                 </div>
             </div>

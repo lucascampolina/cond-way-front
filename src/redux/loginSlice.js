@@ -11,6 +11,7 @@ export const loginUser = createAsyncThunk(
     async (userCredentials, { rejectWithValue }) => {
         try {
             const response = await axios.get(`http://localhost:8080/api/login?email=${userCredentials.email}&password=${userCredentials.password}`);
+            console.log('Server response:', response.data);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.message);
@@ -30,10 +31,12 @@ export const loginSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state) => {
                 state.status = 'succeeded';
+                console.log('loginStatus after fulfilled:', state.status);
                 state.error = null;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';
+                console.log('loginStatus after rejected:', state.status);
                 state.error = action.payload;
             });
     },

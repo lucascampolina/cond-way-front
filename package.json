@@ -30,9 +30,9 @@
     "zod": "^3.23.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "build:css": "npx postcss src/index.css -o src/tailwind.css",
     "eject": "react-scripts eject"
   },
@@ -58,6 +58,8 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "postcss-cli": "^11.0.0",
     "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-preset-env": "^9.5.11"
+    "postcss-preset-env": "^9.5.11",
+    "react-app-rewired": "^2.2.1",
+    "source-map-loader": "^5.0.0"
   }
 }
