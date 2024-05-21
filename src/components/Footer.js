@@ -106,7 +106,7 @@ const Footer = () => {
                             alt="Company name"
                         />
                         <p className="text-sm leading-6 text-gray-600">
-                            Fazendo do mundo um lugar melhor através da construção de sistemas simples e elegantes.
+                            Fazendo do mundo um lugar melhor através da gestão do seu condomínio de forma simples e funcional.
                         </p>
                         <div className="flex space-x-6">
                             {navigation.social.map((item) => (

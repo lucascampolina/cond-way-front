@@ -16,21 +16,7 @@ import {
 import {ChevronDownIcon, MagnifyingGlassIcon} from '@heroicons/react/20/solid';
 import SidebarNavigation from './SidebarNavigation';
 import HomeScreen from "./HomeScreen";
-
-const navigation = [
-    {name: 'Painel', href: '/dashboard', icon: HomeIcon, current: true},
-    {
-        name: 'Cadastro', href: '#', icon: UsersIcon, current: false,
-        submenu: [
-            {name: 'Condomínio', href: '/condominio'},
-            {name: 'Gestão', href: '/gestao'},
-        ]
-    },
-    {name: 'Financeiro', href: '/financeiro', icon: FolderIcon, current: false},
-    {name: 'Calendário', href: '/calendario', icon: CalendarIcon, current: false},
-    {name: 'Documentos', href: '/documentos', icon: DocumentDuplicateIcon, current: false},
-    {name: 'Relatórios', href: '/relatorios', icon: ChartPieIcon, current: false},
-];
+import Modal from "./Modal";
 
 const userNavigation = [
     {name: 'Seu perfil', href: '#'},
@@ -40,10 +26,27 @@ const userNavigation = [
 const Dashboard = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isSubmenuExpanded, setIsSubmenuExpanded] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const toggleSubmenu = () => {
         setIsSubmenuExpanded(!isSubmenuExpanded);
     };
+
+    const navigation = [
+        {name: 'Painel', href: '/dashboard', icon: HomeIcon, current: true},
+        {
+            name: 'Cadastro', href: '#', icon: UsersIcon, current: false,
+            submenu: [
+                {name: 'Funcionário', href: '#', onClick: () => setIsModalOpen(true)},
+                {name: 'Condomínio', href: '/condominio'},
+                {name: 'Gestão', href: '/gestao'},
+            ]
+        },
+        {name: 'Financeiro', href: '/financeiro', icon: FolderIcon, current: false},
+        {name: 'Calendário', href: '/calendario', icon: CalendarIcon, current: false},
+        {name: 'Documentos', href: '/documentos', icon: DocumentDuplicateIcon, current: false},
+        {name: 'Relatórios', href: '/relatorios', icon: ChartPieIcon, current: false},
+    ];
 
     return (
         <>
@@ -149,7 +152,7 @@ const Dashboard = () => {
                                 <input
                                     id="search-field"
                                     className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-                                    placeholder="Search..."
+                                    placeholder="Pesquise..."
                                     type="search"
                                     name="search"
                                 />
@@ -217,6 +220,7 @@ const Dashboard = () => {
                     </main>
                 </div>
             </div>
+            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
         </>
     );
 };

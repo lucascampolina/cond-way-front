@@ -68,7 +68,7 @@ const RegistrationForm = () => {
                     <ErrorAlert
                         message="Erro"
                         description={
-                            registrationError.message || "Um erro ocorreu durante a operação."
+                            registrationError.message || "E-mail já cadastrado na plataforma."
                         }
                         onClose={() => {
                             setErrorMessage(null);

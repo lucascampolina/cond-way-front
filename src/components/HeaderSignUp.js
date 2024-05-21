@@ -51,7 +51,7 @@ const HeaderSignUp = () => {
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
                         <span className="sr-only">Sua Empresa</span>
-                        <img className="h-20 w-auto"
+                        <img className="h-24 w-auto"
                              src={logo} alt=""/>
                     </a>
                 </div>

@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
 export const registrationSchema = z.object({
-    firstName: z.string().min(1, 'First Name is required'),
-    lastName: z.string().min(1, 'Last Name is required'),
-    email: z.string().email('Email must be a valid email'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    passwordConfirmation: z.string().min(8, 'Password Confirmation must be at least 8 characters'),
+    firstName: z.string().min(1, 'Nome é obrigatório'),
+    lastName: z.string().min(1, 'Sobrenome é obrigatório'),
+    email: z.string().email('Email deve ser um email válido'),
+    password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres'),
+    passwordConfirmation: z.string().min(8, 'A confirmação da senha deve ter pelo menos 8 caracteres'),
 });
 
 export const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(8),
+    email: z.string().email('Email deve ser um email válido'),
+    password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres'),
 });

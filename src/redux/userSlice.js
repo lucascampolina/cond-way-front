@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk(
             const response = await axios.post('http://localhost:8080/api/users/register', userData);
             return response.data;
         } catch (error) {
-            console.error("Registration error:", error.response.data);
+            return rejectWithValue(error.message);
         }
     }
 );
