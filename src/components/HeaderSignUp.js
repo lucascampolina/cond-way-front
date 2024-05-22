@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline'
 import {ChevronDownIcon, PhoneIcon, PlayCircleIcon, RectangleGroupIcon} from '@heroicons/react/20/solid'
 import logo from '../images/cond-way-logo.png'
+import {Link} from "react-router-dom";
 
 const products = [
     {
@@ -49,11 +50,11 @@ const HeaderSignUp = () => {
         <header className="relative isolate z-10 bg-white">
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <Link to="/login" className="-m-1.5 p-1.5">
                         <span className="sr-only">Sua Empresa</span>
                         <img className="h-24 w-auto"
                              src={logo} alt=""/>
-                    </a>
+                    </Link>
                 </div>
                 <div className="flex lg:hidden">
                     <button
@@ -134,9 +135,9 @@ const HeaderSignUp = () => {
                     </a>
                 </Popover.Group>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
                         Entrar <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    </Link>
                 </div>
             </nav>
             <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -210,12 +211,12 @@ const HeaderSignUp = () => {
                                 </a>
                             </div>
                             <div className="py-6">
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/login"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
                                     Entrar
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

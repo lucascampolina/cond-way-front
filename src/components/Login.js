@@ -5,7 +5,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {loginSchema} from "../validationSchemas";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser, selectLoginStatus, selectLoginError} from "../redux/loginSlice";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, Redirect} from "react-router-dom";
 import ErrorAlert from "./ErrorAlert";
 
 const Login = () => {

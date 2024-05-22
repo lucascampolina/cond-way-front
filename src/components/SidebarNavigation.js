@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
-const SidebarNavigation = ({ navigation, isSubmenuExpanded, toggleSubmenu }) => (
+const SidebarNavigation = ({ navigation, isSubmenuExpanded, toggleSubmenu, setIsModalOpen }) => (
     <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
             <li>
@@ -11,6 +11,7 @@ const SidebarNavigation = ({ navigation, isSubmenuExpanded, toggleSubmenu }) => 
                             <div className="flex items-center justify-between">
                                 <Link
                                     to={item.href}
+                                    onClick={item.onClick}
                                     className={`group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
                                         item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50'
                                     }`}
@@ -42,6 +43,7 @@ const SidebarNavigation = ({ navigation, isSubmenuExpanded, toggleSubmenu }) => 
                                         <li key={subItem.name}>
                                             <Link
                                                 to={subItem.href}
+                                                onClick={subItem.onClick}
                                                 className="text-gray-500 hover:text-indigo-600 hover:bg-gray-50 block px-3 py-2 rounded-md text-sm font-medium pl-9"
                                             >
                                                 {subItem.name}

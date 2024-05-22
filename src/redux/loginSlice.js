@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -8,9 +8,13 @@ const initialState = {
 
 export const loginUser = createAsyncThunk(
     'login/loginUser',
-    async (userCredentials, { rejectWithValue }) => {
+    async (userCredentials, {rejectWithValue}) => {
+        const {email, password} = userCredentials;
         try {
-            const response = await axios.get(`http://localhost:8080/api/login?email=${userCredentials.email}&password=${userCredentials.password}`);
+            const response = await axios.post(`http://localhost:8080/api/login?`, {
+                email,
+                password,
+            });
             console.log('Server response:', response.data);
             return response.data;
         } catch (error) {

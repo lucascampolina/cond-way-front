@@ -105,6 +105,8 @@ const Dashboard = () => {
                                             navigation={navigation}
                                             isSubmenuExpanded={isSubmenuExpanded}
                                             toggleSubmenu={toggleSubmenu}
+                                            setIsModalOpen={setIsModalOpen}
+
                                         />
                                     </div>
                                 </Dialog.Panel>
@@ -124,6 +126,7 @@ const Dashboard = () => {
                             navigation={navigation}
                             isSubmenuExpanded={isSubmenuExpanded}
                             toggleSubmenu={toggleSubmenu}
+                            setIsModalOpen={setIsModalOpen}
                         />
                     </div>
                 </div>
