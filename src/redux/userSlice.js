@@ -12,13 +12,10 @@ export const registerUser = createAsyncThunk(
     'user/register',
     async (userData, {rejectWithValue}) => {
         try {
-            console.log("Sending registration request:", userData);
             const response = await axios.post('http://localhost:8080/api/users/register', userData);
-            console.log("Registration response:", response.data);
             return response.data;
         } catch (error) {
-            console.error("Registration error:", error.response.data);
-            return rejectWithValue(error.response.data);
+            return rejectWithValue(error.message);
         }
     }
 );
