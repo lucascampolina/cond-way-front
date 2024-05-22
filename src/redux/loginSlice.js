@@ -11,10 +11,7 @@ export const loginUser = createAsyncThunk(
     async (userCredentials, {rejectWithValue}) => {
         const {email, password} = userCredentials;
         try {
-            const response = await axios.post(`http://localhost:8080/api/login?`, {
-                email,
-                password,
-            });
+            const response = await axios.post('http://localhost:8080/api/login', { email, password }, { withCredentials: true });
             console.log('Server response:', response.data);
             return response.data;
         } catch (error) {
@@ -45,7 +42,6 @@ export const loginSlice = createSlice({
             });
     },
 });
-
 
 export const selectLoginStatus = (state) => state.login.status;
 export const selectLoginError = (state) => state.login.error;
